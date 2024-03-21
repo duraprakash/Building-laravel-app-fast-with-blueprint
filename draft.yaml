@@ -1,9 +1,12 @@
 models:
   Employee:
-    name: string:100
-    identifiacation: string:100
+    name: 'string:100'
+    identifiacation: 'string:100 unique'
     birth: datetime
     salary: integer
+    marital_status: enum:single,married,divorced
+    bonus: decimal:8,2 nullable
+    order: unsignedinteger default:1 index
 
 controllers:
   # ...

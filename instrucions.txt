@@ -70,5 +70,37 @@ db connection with xammp
     [in command prompt]  =>  blueprint
     [in powershell vscode terminal]  =>  ./blueprint
 
-13.
+13. delete or rename draft.yaml to build new blueprint file
+    draft1.yaml
+
+14. (again) create new draft.yaml file
+    php artisan blueprint:new
+
+15. trace blueprint
+    php artisan blueprint:trace
+
+    NOTE: if dublicate model,migration and factory is build then run blueprint:erase
+
+16. draft.yaml multiple line and model modifier
+    models:
+    Employee:
+        name: 'string:100'
+        identifiacation: 'string:100 unique'
+        birth: datetime
+        salary: integer
+        marital_status: enum:single,married,divorced
+        bonus: decimal:8,2 nullable
+        order: unsignedinteger default:1 index
+
+    controllers:
+    # ...
+
+    then, run batch file
+    ./blueprint
+
+17. 
+
+
+
+
     
