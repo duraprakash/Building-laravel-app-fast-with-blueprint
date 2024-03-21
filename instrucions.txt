@@ -1,1 +1,63 @@
 Instructions:
+
+1. create project using laravel10
+    composer create-project laravel/laravel emp_sys "10.*" --prefer-dist
+
+2. change directory
+    cd emp_sys
+
+3. run server
+    php artisan serve
+
+db connection with xammp
+-- .env file --
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=emp_sys
+    DB_USERNAME=root
+    DB_PASSWORD=
+
+4. migrate
+    php artisan migrate
+
+5. install blueprint
+    composer require --dev laravel-shift/blueprint
+
+6. draft.yaml file
+    php artisan blueprint:new
+
+-- draft.yaml file --
+    models:
+    Employee:
+        name: string:100
+        identifiacation: string:100
+        birth: datetime:100
+        salary: integer
+
+    controllers:
+    # ...
+
+7. build model from yaml -generate model, migration and factory
+    php artian blueprint:build
+
+8. register model for seeding in DatabaseSeeder
+    public function run(): void
+    {
+        \App\Models\Employee::factory(10)->create();
+    }
+
+9. run migration
+    php artisan migrate:fresh
+
+10. changes or update in draft.yaml structure -delete model, migration and factory
+    php artisan blueprint:erase
+
+    then, build blueprint
+        php artian blueprint:build 
+    also, run fresh migration
+        php artisan migrate:fresh
+    lastly, seeding
+        php artisan db:seed
+
+11. 
