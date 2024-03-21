@@ -98,7 +98,25 @@ db connection with xammp
     then, run batch file
     ./blueprint
 
-17. 
+17. one to many relationship [employee-department]
+    models:
+    Employee:
+        name: "string:100"
+        identifiacation: "string:100 unique"
+        birth: datetime
+        salary: integer
+        marital_status: enum:single,married,divorced
+        bonus: decimal:8,2 nullable
+        order: unsignedinteger default:1 index
+        department_id: id foreign:department.id
+    Department:
+        name: string:100
+
+    controllers:
+    # ...
+
+    then, run batch file
+    ./blueprint
 
 
 

@@ -11,17 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employees', function (Blueprint $table) {
+        Schema::disableForeignKeyConstraints();
+
+        Schema::create('departments', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->string('identifiacation', 100)->unique();
-            $table->dateTime('birth');
-            $table->integer('salary');
-            $table->enum('marital_status', ["single","married","divorced"]);
-            $table->decimal('bonus', 8, 2)->nullable();
-            $table->unsignedInteger('order')->default(1)->index();
             $table->timestamps();
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employees');
+        Schema::dropIfExists('departments');
     }
 };
