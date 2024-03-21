@@ -118,7 +118,7 @@ db connection with xammp
     then, run batch file
     ./blueprint
 
-18. many to many relationship [employee-department]
+18. many to many relationship [employee-project]
     models:
     Employee:
         name: "string:100"
