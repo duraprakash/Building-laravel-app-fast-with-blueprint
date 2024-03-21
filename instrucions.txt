@@ -60,4 +60,15 @@ db connection with xammp
     lastly, seeding
         php artisan db:seed
 
-11. 
+11. create blueprint.bat file manually which include -1 command 4 tasks
+    php artisan blueprint:erase
+    php artisan blueprint:build
+    php artisan migrate:fresh
+    php artisan db:seed
+
+12. execute blueprint.bat in vscode terminal(error) -use system terminal(cmd)
+    [in command prompt]  =>  blueprint
+    [in powershell vscode terminal]  =>  ./blueprint
+
+13.
+    
