@@ -261,3 +261,15 @@ db connection with xammp
         \App\Models\ContactInfo::factory(10)->create();
     }
 
+22. blueprint configuration
+    blueprint.php file in config folder -in model folder there will be no more generated models
+    php artisan blueprint:erase
+    php artisan vendor:publish --tag=blueprint-config
+
+    -- in config/blueprint.php --
+    //'generate_fqcn_route' => false, to 
+    'generate_fqcn_route' => true,
+
+    -- in routes/web.php --
+    Route::resource('employee', 'EmployeeController');
+    Route::get('employee/test', [App\Http\Controllers\employmentController::class, 'test']);
