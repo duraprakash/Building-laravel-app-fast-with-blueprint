@@ -15,13 +15,14 @@ final class EmployeeControllerTest extends TestCase
     use RefreshDatabase;
 
     #[Test]
-    public function test_responds_with(): void
+    public function test_displays_view(): void
     {
         $employee = Employee::factory()->create();
 
         $response = $this->get(route('employees.test'));
 
         $response->assertOk();
-        $response->assertJson($employee);
+        $response->assertViewIs('employee.show');
+        $response->assertViewHas('employee');
     }
 }

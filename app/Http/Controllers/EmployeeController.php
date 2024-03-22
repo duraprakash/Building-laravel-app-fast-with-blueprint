@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class EmployeeController extends Controller
 {
@@ -11,6 +12,6 @@ class EmployeeController extends Controller
     {
         $employee = Employee::find($request->id);
 
-        return $employee;
+        return view('employee.show', compact('employee'));
     }
 }
