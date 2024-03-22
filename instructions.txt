@@ -520,7 +520,7 @@ db connection with xammp
         controllers:
         Employee:
             test:
-            find: id
+                find: id
 
     then, run batch file
     ./blueprint
@@ -559,8 +559,8 @@ db connection with xammp
         controllers:
         Employee:
             test:
-            find: id
-            delete: employee
+                find: id
+                delete: employee
 
     then, run batch file
     ./blueprint
@@ -591,8 +591,8 @@ db connection with xammp
         controllers:
         Employee:
             test:
-            find: id
-            dispatch: ComputeSalary with:employee
+                find: id
+                dispatch: ComputeSalary with:employee
 
     then, run batch file
     ./blueprint
@@ -623,8 +623,8 @@ db connection with xammp
         controllers:
         Employee:
             test:
-            find: id
-            fire: FancyEvent with:employee
+                find: id
+                fire: FancyEvent with:employee
 
     then, run batch file generate controller, and folder-> event/FancyEvnet.php
     ./blueprint
@@ -661,9 +661,58 @@ db connection with xammp
         controllers:
         Employee:
             test:
-            find: id
-            fire: FancyEvent with:employee
-            flash: employee.name
+                find: id
+                fire: FancyEvent with:employee
+                flash: employee.name
 
     then, run batch file generate controller, and folder-> event/FancyEvnet.php
     ./blueprint
+
+31. notify to the user using blueprint
+    models existing code ....
+        controllers:
+        Employee:
+            test:
+                find: project.id
+                fire: FancyEvent with:employee
+                flash: employee.name
+                notify: employee checkDetails with:project
+
+    then, run batch file
+    ./blueprint
+
+    then, make:notification -will generate notifications folder with checkDetails.php file
+    php artisan make:notification checkDetails
+
+    then, changes in controller
+        namespace App\Http\Controllers;
+
+        use App\Events\FancyEvent;
+        use App\Models\Project;
+        use App\Models\Employee;
+        use Illuminate\Http\Request;
+        use Illuminate\Http\Response;
+        use App\Notifications;
+
+        class EmployeeController extends Controller
+        {
+            public function test(Request $request): Response
+            {
+                $project = Project::find($request->id);
+                $employee = Employee::find(5);
+
+                FancyEvent::dispatch($employee);
+
+                $request->session()->flash('employee.name', $employee->name);
+
+                $employee->notify(new checkDetails($project));
+            }
+        }
+
+    then, in employee model add use notifiable traits
+        class Employee extends Model
+        {
+            use HasFactory;
+            use notifiable;
+            ......
+        }

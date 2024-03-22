@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Employee extends Model
 {
     use HasFactory;
+    use notifiable;
 
     /**
      * The attributes that are mass assignable.

@@ -32,6 +32,7 @@ seeders: Project , ContactInfo
 controllers:
   Employee:
     test:
-      find: id
+      find: project.id
       fire: FancyEvent with:employee
       flash: employee.name
+      notify: employee checkDetails with:project
