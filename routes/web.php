@@ -22,3 +22,12 @@ Route::get('/', function () {
 // Route::get('employees/test', [App\Http\Controllers\EmployeeController::class, 'test']);
 
 Route::get('employees/test', [App\Http\Controllers\EmployeeController::class, 'test']);
+
+
+Route::get('employees/test', [App\Http\Controllers\EmployeeController::class, 'test']);
+
+
+Route::get('employees/test', [App\Http\Controllers\EmployeeController::class, 'test']);
+
+
+Route::get('employees/test', [App\Http\Controllers\EmployeeController::class, 'test']);

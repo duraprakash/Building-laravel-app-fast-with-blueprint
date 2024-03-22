@@ -410,3 +410,77 @@ db connection with xammp
             #original: array:11 [▶]
         }
 
+25. more advance enrich query -- in draft.yaml
+    models:
+        Employee:
+            name: "string:100"
+            identifiacation: "string:100 unique"
+            birth: datetime
+            salary: integer
+            marital_status: enum:single,married,divorced
+            bonus: decimal:8,2 nullable
+            order: unsignedinteger default:1 index
+            department_id: id foreign:department.id
+            relationships:
+            belongsToMany: Project
+            hasOne: ContactInfo
+        ContactInfo:
+            phone: string:100
+            email: string:100
+            relationships:
+            belongsTo: Employee
+        Department:
+            name: string:100
+            relationships:
+            hasMany: Employee
+        Project:
+            name: string:100
+            timestampsTz
+            softDeletesTz
+            relationships:
+            belongsToMany: Employee
+
+        seeders: Project , ContactInfo
+
+        controllers:
+        Employee:
+            test:
+            query: where:salary where:name order:bonus limit:3
+
+    then, run batch file
+    ./blueprint
+    
+    after that, add this $salary = $request->salary; and dd($employees->toArray()); in the generated controller
+        class EmployeeController extends Controller
+        {
+            public function test(Request $request): Response
+            {
+                $salary = $request->salary; // this line of code
+                $name = $request->name; // this line of code
+                $employees = Employee::where('salary', '>', $salary)->where('name','like', '%'. $name. '%')->orderBy('bonus')->limit(3)->get();
+                dd($employees->toArray()); // this line of code with array
+            }
+        }
+    
+    -- in route/web.php -- route will be generated
+        Route::get('employees/test', [App\Http\Controllers\EmployeeController::class, 'test']);
+    
+    then, test the actual output at urls: http://127.0.0.1:8000/employees/test?salary=1000&name=a
+    then, look at items array like this in browser
+    array:3 [▼ // app\Http\Controllers\EmployeeController.php:16
+        0 => array:11 [▼
+            "id" => 11
+            "name" => "Susan Jerde"
+            "identifiacation" => "GMr2Eym5B8jEBmWVFB6Ix757dHtTMcLl76cwqaIqPrhfr8yiRp1UQ4QqlZZzS1SUnQvY9aq0Zj1Gjc6B7N31oGcH01eTmQBvby9u"
+            "birth" => "1982-04-21T02:05:38.000000Z"
+            "salary" => 8821
+            "marital_status" => "single"
+            "bonus" => "37814.67"
+            "order" => 21694336
+            "department_id" => 11
+            "created_at" => "2024-03-22T07:06:32.000000Z"
+            "updated_at" => "2024-03-22T07:06:32.000000Z"
+        ]
+        1 => array:11 [▶]
+        2 => array:11 [▶]
+    ]
