@@ -32,4 +32,4 @@ seeders: Project , ContactInfo
 controllers:
   Employee:
     test:
-      query: where:salary where:name order:bonus limit:3
+      find: id

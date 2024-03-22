@@ -484,3 +484,72 @@ db connection with xammp
         1 => array:11 [▶]
         2 => array:11 [▶]
     ]
+
+26. find in draft.yaml
+    models:
+        Employee:
+            name: "string:100"
+            identifiacation: "string:100 unique"
+            birth: datetime
+            salary: integer
+            marital_status: enum:single,married,divorced
+            bonus: decimal:8,2 nullable
+            order: unsignedinteger default:1 index
+            department_id: id foreign:department.id
+            relationships:
+            belongsToMany: Project
+            hasOne: ContactInfo
+        ContactInfo:
+            phone: string:100
+            email: string:100
+            relationships:
+            belongsTo: Employee
+        Department:
+            name: string:100
+            relationships:
+            hasMany: Employee
+        Project:
+            name: string:100
+            timestampsTz
+            softDeletesTz
+            relationships:
+            belongsToMany: Employee
+
+        seeders: Project , ContactInfo
+
+        controllers:
+        Employee:
+            test:
+            find: id
+
+    then, run batch file
+    ./blueprint
+
+    after that, add this $salary = $request->salary; and dd($employees->toArray()); in the generated controller
+        class EmployeeController extends Controller
+        {
+            public function test(Request $request): Response
+            {
+                $employee = Employee::find($request->id);
+                dd($employee->toArray());
+            }
+        }
+    
+    -- in route/web.php -- route will be generated
+        Route::get('employees/test', [App\Http\Controllers\EmployeeController::class, 'test']);
+    
+    then, test the actual output at urls: http://127.0.0.1:8000/employees/test?id=3
+    then, look at items array like this in browser
+    array:11 [▼ // app\Http\Controllers\EmployeeController.php:14
+        "id" => 3
+        "name" => "Leon Gottlieb"
+        "identifiacation" => "ZPdPfah9kInkjlvYI4ZI7rLj7YCBDIHJLiVMgLNnxQDQLsH2CERWDChYuo6w1FZ0BBiR1RdDCzkzg4oN0XSzk643BRYGN70kkmGK"
+        "birth" => "1988-09-10T19:45:01.000000Z"
+        "salary" => 6870
+        "marital_status" => "married"
+        "bonus" => "278477.46"
+        "order" => 94469704
+        "department_id" => 3
+        "created_at" => "2024-03-22T07:18:32.000000Z"
+        "updated_at" => "2024-03-22T07:18:32.000000Z"
+    ]

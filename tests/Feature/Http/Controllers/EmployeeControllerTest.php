@@ -17,7 +17,7 @@ final class EmployeeControllerTest extends TestCase
     #[Test]
     public function test_behaves_as_expected(): void
     {
-        $employees = Employee::factory()->count(3)->create();
+        $employee = Employee::factory()->create();
 
         $response = $this->get(route('employees.test'));
     }
