@@ -27,5 +27,7 @@ models:
     relationships:
       belongsToMany: Employee
 
+seeders: Project , ContactInfo
+
 controllers:
   # ...
