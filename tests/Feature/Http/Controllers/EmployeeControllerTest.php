@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Jobs\ComputeSalary;
+use App\Events\FancyEvent;
 use App\Models\Employee;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Facades\Event;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
@@ -21,12 +21,12 @@ final class EmployeeControllerTest extends TestCase
     {
         $employee = Employee::factory()->create();
 
-        Queue::fake();
+        Event::fake();
 
         $response = $this->get(route('employees.test'));
 
-        Queue::assertPushed(ComputeSalary::class, function ($job) use ($employee) {
-            return $job->employee->is($employee);
+        Event::assertDispatched(FancyEvent::class, function ($event) use ($employee) {
+            return $event->employee->is($employee);
         });
     }
 }

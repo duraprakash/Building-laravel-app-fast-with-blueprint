@@ -617,3 +617,43 @@ db connection with xammp
         #job: App\Jobs\ComputeSalary {#299 ▶}
         #afterResponse: false
     }
+
+29. fire notify
+    models existing code ....
+        controllers:
+        Employee:
+            test:
+            find: id
+            fire: FancyEvent with:employee
+
+    then, run batch file generate controller, and folder-> event/FancyEvnet.php
+    ./blueprint
+
+    after that, code the generated in controller
+        class EmployeeController extends Controller
+        {
+            public function test(Request $request): Response
+            {
+                $employee = Employee::find($id);
+                FancyEvent::dispatch($employee);
+                // event(new FancyEvent($employee)); 
+            }
+        }
+
+    also, code generated in event
+        class FancyEvent
+        {
+            use Dispatchable, SerializesModels;
+
+            public $employee;
+
+            /**
+            * Create a new event instance.
+            */
+            public function __construct($employee)
+            {
+                $this->employee = $employee;
+            }
+        }
+
+30. 
