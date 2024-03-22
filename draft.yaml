@@ -30,4 +30,6 @@ models:
 seeders: Project , ContactInfo
 
 controllers:
-  # ...
+  Employee:
+    test:
+      query: all

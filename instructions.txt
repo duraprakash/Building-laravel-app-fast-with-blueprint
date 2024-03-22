@@ -266,10 +266,34 @@ db connection with xammp
     php artisan blueprint:erase
     php artisan vendor:publish --tag=blueprint-config
 
-    -- in config/blueprint.php --
+    -- in config/blueprint.php -- !was not in this project though
     //'generate_fqcn_route' => false, to 
     'generate_fqcn_route' => true,
 
     -- in routes/web.php --
     Route::resource('employee', 'EmployeeController');
     Route::get('employee/test', [App\Http\Controllers\employmentController::class, 'test']);
+
+23. auto generate controllers
+    either follow 22 manually or
+
+    -- in draft.yaml --
+    controllers:
+        Employee:
+            test:
+            query: all
+
+    then, run batch file
+    ./blueprint
+    
+    after that, add this in the controller
+        class EmployeeController extends Controller
+        {
+            public function test(Request $request): Response
+            {
+                $employees = Employee::all();
+                dd($employees); // this line of code
+            }
+        }
+    
+    then, test the actual outpur at urls: http://127.0.0.1:8000/employees/test
