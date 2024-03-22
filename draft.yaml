@@ -22,6 +22,8 @@ models:
       hasMany: Employee
   Project:
     name: string:100
+    timestampsTz
+    softDeletesTz
     relationships:
       belongsToMany: Employee
 
