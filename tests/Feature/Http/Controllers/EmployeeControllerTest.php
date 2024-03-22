@@ -15,21 +15,13 @@ final class EmployeeControllerTest extends TestCase
     use RefreshDatabase;
 
     #[Test]
-    public function test_redirects(): void
+    public function test_responds_with(): void
     {
         $employee = Employee::factory()->create();
 
         $response = $this->get(route('employees.test'));
 
-        $response->assertRedirect(route('employee.show', [$employee.id]));
-    }
-
-
-    #[Test]
-    public function showEmployee_behaves_as_expected(): void
-    {
-        $employee = Employee::factory()->create();
-
-        $response = $this->get(route('employees.showEmployee'));
+        $response->assertOk();
+        $response->assertJson($employee);
     }
 }

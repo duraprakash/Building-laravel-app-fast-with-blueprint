@@ -765,3 +765,34 @@ db connection with xammp
             "created_at" => "2024-03-22T10:02:53.000000Z"
             "updated_at" => "2024-03-22T10:02:53.000000Z"
         ]
+
+33. respond render using blueprint
+    models existing code ....
+        controllers:
+            Employee:
+                test:
+                find: employee.id
+                respond: employee
+
+    then, run batch file
+    ./blueprint
+
+    - in route/web.php -- route will be generated
+        Route::get('employees/test', [App\Http\Controllers\EmployeeController::class, 'test']);
+
+    -- in controller here remove the : Response--
+        class EmployeeController extends Controller
+        {
+            public function test(Request $request)
+            {
+                $employee = Employee::find($request->id);
+
+                return $employee;
+            }
+        }
+    
+    then, test the actual output at urls: http://127.0.0.1:8000/employees/test?id=3
+    then, in the browser
+        {"id":2,"name":"Hosea Pagac","identifiacation":"qczUNwCRQXooXR9gTsQbLaRiXlfnNEGzev1EE8sUon4RCDZwLhCM3by6WLxKFYJ1oo91S73HvI2LVzEMQW7WMBIsU6fNjjHNdiQc",
+        "birth":"2002-06-23T17:31:02.000000Z","salary":-7301,"marital_status":"divorced","bonus":"26783.06","order":85,"department_id":2,
+        "created_at":"2024-03-22T10:21:05.000000Z","updated_at":"2024-03-22T10:21:05.000000Z"}
