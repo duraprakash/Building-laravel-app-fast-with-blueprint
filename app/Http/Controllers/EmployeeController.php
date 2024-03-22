@@ -11,6 +11,7 @@ class EmployeeController extends Controller
     public function test(Request $request): Response
     {
         $employee = Employee::find($request->id);
-        dd($employee->toArray());
+
+        $employee->delete();
     }
 }

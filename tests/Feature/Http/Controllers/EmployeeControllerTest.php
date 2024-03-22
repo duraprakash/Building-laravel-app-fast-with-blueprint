@@ -15,10 +15,12 @@ final class EmployeeControllerTest extends TestCase
     use RefreshDatabase;
 
     #[Test]
-    public function test_behaves_as_expected(): void
+    public function test_deletes(): void
     {
         $employee = Employee::factory()->create();
 
         $response = $this->get(route('employees.test'));
+
+        $this->assertModelMissing($employee);
     }
 }

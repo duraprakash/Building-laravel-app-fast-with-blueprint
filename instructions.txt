@@ -553,3 +553,33 @@ db connection with xammp
         "created_at" => "2024-03-22T07:18:32.000000Z"
         "updated_at" => "2024-03-22T07:18:32.000000Z"
     ]
+
+27. find in draft.yaml
+    models existing code ....
+        controllers:
+        Employee:
+            test:
+            find: id
+            delete: employee
+
+    then, run batch file
+    ./blueprint
+
+    after that, add this $salary = $request->salary; and dd($employees->toArray()); in the generated controller
+        class EmployeeController extends Controller
+        {
+            public function test(Request $request): Response
+            {
+                $employee = Employee::find($request->id);
+                $employee->delete();
+            }
+        }
+    
+    -- in route/web.php -- route will be generated
+        Route::get('employees/test', [App\Http\Controllers\EmployeeController::class, 'test']);
+    
+    then, test the actual output at urls: http://127.0.0.1:8000/employees/test?id=3
+    then, in the browser you might get error if response is not handled but in the database the record is deleted
+        TypeError
+        App\Http\Controllers\EmployeeController::test(): Return value must be of type Illuminate\Http\Response, none returned
+        
