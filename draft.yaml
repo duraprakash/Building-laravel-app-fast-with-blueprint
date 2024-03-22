@@ -10,6 +10,12 @@ models:
     department_id: id foreign:department.id
     relationships:
       belongsToMany: Project
+      hasOne: ContactInfo
+  ContactInfo:
+    phone: string:100
+    email: string:100
+    relationships:
+      belongsTo: Employee
   Department:
     name: string:100
     relationships:

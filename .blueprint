@@ -1,16 +1,20 @@
 created:
     - database/factories/EmployeeFactory.php
+    - database/factories/ContactInfoFactory.php
     - database/factories/DepartmentFactory.php
     - database/factories/ProjectFactory.php
-    - database/migrations/2024_03_21_151353_create_employees_table.php
-    - database/migrations/2024_03_21_151354_create_departments_table.php
-    - database/migrations/2024_03_21_151355_create_projects_table.php
-    - database/migrations/2024_03_21_151356_create_employee_project_table.php
+    - database/migrations/2024_03_22_032244_create_employees_table.php
+    - database/migrations/2024_03_22_032245_create_contact_infos_table.php
+    - database/migrations/2024_03_22_032246_create_departments_table.php
+    - database/migrations/2024_03_22_032247_create_projects_table.php
+    - database/migrations/2024_03_22_032248_create_employee_project_table.php
     - app/Models/Employee.php
+    - app/Models/ContactInfo.php
     - app/Models/Department.php
     - app/Models/Project.php
 models:
     User: { name: string, email: string, email_verified_at: 'timestamp nullable default:NULL', password: string, remember_token: 'string:100 nullable default:NULL' }
-    Employee: { name: 'string:100', identifiacation: 'string:100 unique', birth: datetime, salary: integer, marital_status: 'enum:single,married,divorced', bonus: 'decimal:8,2 nullable', order: 'unsignedinteger default:1 index', department_id: 'id foreign:department.id', relationships: { belongsToMany: Project } }
+    Employee: { name: 'string:100', identifiacation: 'string:100 unique', birth: datetime, salary: integer, marital_status: 'enum:single,married,divorced', bonus: 'decimal:8,2 nullable', order: 'unsignedinteger default:1 index', department_id: 'id foreign:department.id', relationships: { belongsToMany: Project, hasOne: ContactInfo } }
+    ContactInfo: { phone: 'string:100', email: 'string:100', relationships: { belongsTo: Employee } }
     Department: { name: 'string:100', relationships: { hasMany: Employee } }
     Project: { name: 'string:100', relationships: { belongsToMany: Employee } }

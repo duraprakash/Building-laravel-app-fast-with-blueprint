@@ -146,5 +146,36 @@ db connection with xammp
     then, run batch file
     ./blueprint
 
+19. one to many relationship [emp-contactinfo]
+    models:
+    Employee:
+        name: "string:100"
+        identifiacation: "string:100 unique"
+        birth: datetime
+        salary: integer
+        marital_status: enum:single,married,divorced
+        bonus: decimal:8,2 nullable
+        order: unsignedinteger default:1 index
+        department_id: id foreign:department.id
+        relationships:
+        belongsToMany: Project
+        hasOne: ContactInfo
+    ContactInfo:
+        phone: string:100
+        email: string:100
+        relationships:
+        belongsTo: Employee
+    Department:
+        name: string:100
+        relationships:
+        hasMany: Employee
+    Project:
+        name: string:100
+        relationships:
+        belongsToMany: Employee
 
-    
+    controllers:
+    # ...
+
+    then, run batch file
+    ./blueprint
