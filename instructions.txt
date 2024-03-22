@@ -582,4 +582,38 @@ db connection with xammp
     then, in the browser you might get error if response is not handled but in the database the record is deleted
         TypeError
         App\Http\Controllers\EmployeeController::test(): Return value must be of type Illuminate\Http\Response, none returned
-        
+
+28. make job - generate job folder 
+    php artisan make:job ComputeSalary
+
+    -- draft.yaml--
+    models existing code...
+        controllers:
+        Employee:
+            test:
+            find: id
+            dispatch: ComputeSalary with:employee
+
+    then, run batch file
+    ./blueprint
+
+    after that, add this in the generated controller
+        class EmployeeController extends Controller
+        {
+            public function test(Request $request): Response
+            {
+                $employee = Employee::find($request->id);
+                $computeSalary = ComputeSalary::dispatch($request->employee);
+                dd($computeSalary);
+            }
+        }
+    
+    -- in route/web.php -- route will be generated
+        Route::get('employees/test', [App\Http\Controllers\EmployeeController::class, 'test']);
+    
+    then, test the actual output at urls: http://127.0.0.1:8000/employees/test?id=3
+    then, in the browser
+    Illuminate\Foundation\Bus\PendingDispatch {#291 ▼ // app\Http\Controllers\EmployeeController.php:18
+        #job: App\Jobs\ComputeSalary {#299 ▶}
+        #afterResponse: false
+    }
