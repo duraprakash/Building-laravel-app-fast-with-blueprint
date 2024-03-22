@@ -32,5 +32,6 @@ seeders: Project , ContactInfo
 controllers:
   Employee:
     test:
-      find: employee
+      find: employee.id
+      save: employee
       

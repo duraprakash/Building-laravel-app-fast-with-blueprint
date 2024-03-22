@@ -876,3 +876,42 @@ db connection with xammp
                 'department_id' => ['required', 'integer', 'exists:departments,id'],
             ];
         }
+
+36. find and save the change in database using blueprint -- have to manually do
+    models existing code ....
+        controllers:
+            Employee:
+                test:
+                    find: employee.id
+                    save: employee
+
+    then, run batch file
+    ./blueprint
+
+    -- in controller --
+        public function test(Request $request): Response
+        {
+            $employee = Employee::find($request->id);
+            $employee->name="Mark"; // changed name to Mark
+            $employee->save();
+
+            // showing the changed data
+            $employee1 = Employee::find($request->id);
+            dd($employee1->toArray());
+        }
+
+    then, test the actual output at urls: http://127.0.0.1:8000/employees/test?id=3
+    then, in the browser
+        array:11 [▼ // app\Http\Controllers\EmployeeController.php:19
+            "id" => 3
+            "name" => "Mark"
+            "identifiacation" => "1WFtpJsl8bYgDv9soK2nTfIsEHhQLCmn28RERALGaPw8kSxYr8KcltTTIZ9XDUQxKCSteegwz4GM9exlXRWAHOeKqtcQgo6GxK1U"
+            "birth" => "1981-03-15T18:56:25.000000Z"
+            "salary" => 6896
+            "marital_status" => "divorced"
+            "bonus" => "755121.46"
+            "order" => 142
+            "department_id" => 3
+            "created_at" => "2024-03-22T12:13:08.000000Z"
+            "updated_at" => "2024-03-22T12:16:36.000000Z"
+        ]
