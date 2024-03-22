@@ -34,3 +34,4 @@ controllers:
     test:
       find: id
       fire: FancyEvent with:employee
+      flash: employee.name

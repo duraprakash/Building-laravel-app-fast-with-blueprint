@@ -656,4 +656,14 @@ db connection with xammp
             }
         }
 
-30. 
+30. flash session using blueprint
+    models existing code ....
+        controllers:
+        Employee:
+            test:
+            find: id
+            fire: FancyEvent with:employee
+            flash: employee.name
+
+    then, run batch file generate controller, and folder-> event/FancyEvnet.php
+    ./blueprint

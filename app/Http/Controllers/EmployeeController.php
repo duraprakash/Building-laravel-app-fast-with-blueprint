@@ -14,6 +14,7 @@ class EmployeeController extends Controller
         $employee = Employee::find($id);
 
         FancyEvent::dispatch($employee);
-        // event(new FancyEvent($employee));
+
+        $request->session()->flash('employee.name', $employee->name);
     }
 }
