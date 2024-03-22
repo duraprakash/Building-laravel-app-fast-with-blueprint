@@ -146,7 +146,7 @@ db connection with xammp
     then, run batch file
     ./blueprint
 
-19. one to many relationship [emp-contactinfo]
+19. one to one relationship [emp-contactinfo]
     models:
     Employee:
         name: "string:100"
@@ -277,7 +277,7 @@ db connection with xammp
 23. auto generate controllers
     either follow 22 manually or
 
-    -- in draft.yaml --
+    -- in draft.yaml just add controllers to the existing code of 21 --
     controllers:
         Employee:
             test:
@@ -286,7 +286,7 @@ db connection with xammp
     then, run batch file
     ./blueprint
     
-    after that, add this in the controller
+    after that, add this dd($employees); in the controller
         class EmployeeController extends Controller
         {
             public function test(Request $request): Response
@@ -296,4 +296,28 @@ db connection with xammp
             }
         }
     
-    then, test the actual outpur at urls: http://127.0.0.1:8000/employees/test
+    -- in route/web.php -- route will be generated
+        Route::get('employees/test', [App\Http\Controllers\EmployeeController::class, 'test']);
+    
+    then, test the actual output at urls: http://127.0.0.1:8000/employees/test
+
+# challange ##5 Advance Models
+    * make the whole ERD in a blueprint file
+    * one-to-many relation (product-category)
+    * many-to-many relation (customer-address)
+    * decide what suitable modifiers you wanna add
+    * generate 3 categories, 10 products, 4 customers
+        * 2 of them are husband and wife and they share the same address
+    * generate 100 bills on 2 weeks
+        ACTIONS
+    * get all sales in one dynamic
+    * get the sum of all bills of one customer
+    * get the sum of all bills in one given day for one customer
+    
+    * put them in actions that returns json
+
+# challange ##6 Morph relation
+    * add tags table
+    * link with product and category
+    * implement the morphMany realtion using blueprint
+
