@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
+use App\Http\Requests\EmployeeTestRequest;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
+use Illuminate\Http\Response;
 
 class EmployeeController extends Controller
 {
-    public function test(Request $request)
+    public function test(EmployeeTestRequest $request): Response
     {
-        $employee = Employee::find($request->id);
-
-        return view('employee.show', compact('employee'));
+        
     }
 }

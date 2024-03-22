@@ -32,6 +32,5 @@ seeders: Project , ContactInfo
 controllers:
   Employee:
     test:
-      find: employee.id
-      render: employee.show with employee
+      find: employee
       

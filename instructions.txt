@@ -801,8 +801,8 @@ db connection with xammp
         controllers:
             Employee:
                 test:
-                find: employee.id
-                render: employee.show with employee
+                    find: employee.id
+                    render: employee.show with employee
 
     then, run batch file
     ./blueprint
@@ -834,3 +834,45 @@ db connection with xammp
     then, test the actual output at urls: http://127.0.0.1:8000/employees/test?id=3
     then, in the browser
         Hello Myron Feeney
+
+35. rest of the statement
+    models existing code ....
+        controllers:
+            Employee:
+                test:
+                    validate: employee
+
+    then, run batch file
+    ./blueprint
+
+    -- contoller --
+    public function test(EmployeeTestRequest $request): Response
+    {
+        
+    }
+
+    -- Requests/EmployeeTestRequest -- generated with validation
+        /**
+        * Determine if the user is authorized to make this request.
+        */
+        public function authorize(): bool
+        {
+            return true;
+        }
+
+        /**
+        * Get the validation rules that apply to the request.
+        */
+        public function rules(): array
+        {
+            return [
+                'name' => ['required', 'string', 'max:100'],
+                'identifiacation' => ['required', 'string', 'max:100', 'unique:employees,identifiacation'],
+                'birth' => ['required'],
+                'salary' => ['required', 'integer'],
+                'marital_status' => ['required', 'in:single,married,divorced'],
+                'bonus' => ['nullable', 'numeric', 'between:-999999.99,999999.99'],
+                'order' => ['required', 'integer', 'gt:0'],
+                'department_id' => ['required', 'integer', 'exists:departments,id'],
+            ];
+        }
