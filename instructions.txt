@@ -321,3 +321,92 @@ db connection with xammp
     * link with product and category
     * implement the morphMany realtion using blueprint
 
+24. more advance query -- in draft.yaml
+    models:
+        Employee:
+            name: "string:100"
+            identifiacation: "string:100 unique"
+            birth: datetime
+            salary: integer
+            marital_status: enum:single,married,divorced
+            bonus: decimal:8,2 nullable
+            order: unsignedinteger default:1 index
+            department_id: id foreign:department.id
+            relationships:
+            belongsToMany: Project
+            hasOne: ContactInfo
+        ContactInfo:
+            phone: string:100
+            email: string:100
+            relationships:
+            belongsTo: Employee
+        Department:
+            name: string:100
+            relationships:
+            hasMany: Employee
+        Project:
+            name: string:100
+            timestampsTz
+            softDeletesTz
+            relationships:
+            belongsToMany: Employee
+
+        seeders: Project , ContactInfo
+
+        controllers:
+        Employee:
+            test:
+            query: where:salary order:bonus
+
+    then, run batch file
+    ./blueprint
+    
+    after that, add this $salary = $request->salary; and dd($employees); in the generated controller
+        class EmployeeController extends Controller
+        {
+            public function test(Request $request): Response
+            {
+                $salary = $request->salary; // this line of code
+                //$employees = Employee::where('salary', $salary)->orderBy('bonus')->get();
+                    OR
+                $employees = Employee::where('salary','>', $salary)->orderBy('bonus')->get();
+                dd($employees); // this line of code
+            }
+        }
+    
+    -- in route/web.php -- route will be generated
+        Route::get('employees/test', [App\Http\Controllers\EmployeeController::class, 'test']);
+    
+    then, test the actual output at urls: http://127.0.0.1:8000/employees/test?salary=100
+    then, look at items array like this in browser
+     #items: array:10 [▼
+        0 => App\Models\Employee {#1274 ▶}
+        1 => App\Models\Employee {#1275 ▼
+            #connection: "mysql"
+            #table: "employees"
+            #primaryKey: "id"
+            #keyType: "int"
+            +incrementing: true
+            #with: []
+            #withCount: []
+            +preventsLazyLoading: false
+            #perPage: 15
+            +exists: true
+            +wasRecentlyCreated: false
+            #escapeWhenCastingToString: false
+            #attributes: array:11 [▼
+                "id" => 2
+                "name" => "Trinity Cruickshank"
+                "identifiacation" => "Nvkq0TafgbhI59RKtQmSqtWaHB4MMd75qja6FERdViWmLZtSKgYXtnBY7LQ6uIG87I9um3xUzZgmunaozvvDg5lg0ZvaUOUky0G6"
+                "birth" => "2016-11-07 17:37:57"
+                "salary" => 898
+                "marital_status" => "divorced"
+                "bonus" => "314919.46"
+                "order" => 270424
+                "department_id" => 2
+                "created_at" => "2024-03-22 06:25:12"
+                "updated_at" => "2024-03-22 06:25:12"
+            ]
+            #original: array:11 [▶]
+        }
+

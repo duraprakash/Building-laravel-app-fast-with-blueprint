@@ -10,7 +10,8 @@ class EmployeeController extends Controller
 {
     public function test(Request $request): Response
     {
-        $employees = Employee::all();
+        $salary = $request->salary;
+        $employees = Employee::where('salary','>', $salary)->orderBy('bonus')->get();
         dd($employees);
     }
 }
