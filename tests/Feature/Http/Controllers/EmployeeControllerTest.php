@@ -21,6 +21,6 @@ final class EmployeeControllerTest extends TestCase
 
         $response = $this->get(route('employees.test'));
 
-        $response->assertSessionHas('employee.name', $employee->name);
+        $employee->refresh();
     }
 }

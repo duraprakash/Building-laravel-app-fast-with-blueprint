@@ -956,13 +956,40 @@ db connection with xammp
             );
         }
 
-38. store 
+38. store using blueprint
     models existing code ....
         controllers:
             Employee:
                 test:
                     find: employee.id
-                    send: ThanksMail to:employee.contactInfo.email
+                    store: employee.name
 
     then, run batch file
     ./blueprint
+
+    -- in controller --
+    public function test(Request $request): Response
+        {
+            $employee = Employee::find($request->id);
+    
+            $request->session()->store('employee.name', $employee->name);
+        }
+
+39. update using blueprint
+    models existing code ....
+        controllers:
+            Employee:
+                test:
+                    find: employee.id
+                    update: name, identifiacation
+
+    then, run batch file
+    ./blueprint
+
+    -- in controller --
+        public function test(Request $request): Response
+        {
+            $employee = Employee::find($request->id);
+    
+            $employee->update(['name' => $request->name, 'identification' => $request->identification]);
+        }

@@ -33,5 +33,5 @@ controllers:
   Employee:
     test:
       find: employee.id
-      store: employee.name
+      update: name, identification
       
