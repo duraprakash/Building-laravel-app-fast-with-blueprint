@@ -1033,5 +1033,36 @@ db connection with xammp
                 'contactInfo' => ContactInfoResource::make($this->whenLoaded('contactInfo')),
             ];
         }
-
         
+41. paginate using blueprint -- generate resource file and convert into Json format
+    models existing code ....
+        controllers:
+            Employee:
+                test:
+                    find: employee.id
+                    resource: paginate:employee
+
+    then, run batch file
+    ./blueprint
+
+    -- in controller --
+        public function test(Request $request): Response
+        {
+            $employees = Employee::paginate();
+
+            $employee = Employee::find($request->id);
+
+            return new EmployeeCollection($employee);
+        }
+
+    -- in Resources/EmployeeCollection--
+        /**
+        * Transform the resource collection into an array.
+        */
+        public function toArray(Request $request): array
+        {
+            return [
+                'data' => $this->collection,
+            ];
+        }
+
