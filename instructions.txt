@@ -955,5 +955,14 @@ db connection with xammp
                 view: 'emails.thanks-mail',
             );
         }
-        
-38. 
+
+38. store 
+    models existing code ....
+        controllers:
+            Employee:
+                test:
+                    find: employee.id
+                    send: ThanksMail to:employee.contactInfo.email
+
+    then, run batch file
+    ./blueprint

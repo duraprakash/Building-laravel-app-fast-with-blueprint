@@ -2,10 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Mail\ThanksMail;
 use App\Models\Employee;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Mail;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
@@ -21,12 +19,8 @@ final class EmployeeControllerTest extends TestCase
     {
         $employee = Employee::factory()->create();
 
-        Mail::fake();
-
         $response = $this->get(route('employees.test'));
 
-        Mail::assertSent(ThanksMail::class, function ($mail) {
-            return $mail->hasTo($employee->contactInfo->email);
-        });
+        $response->assertSessionHas('employee.name', $employee->name);
     }
 }

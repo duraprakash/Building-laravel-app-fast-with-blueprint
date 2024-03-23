@@ -33,5 +33,5 @@ controllers:
   Employee:
     test:
       find: employee.id
-      send: ThanksMail to:employee.contactInfo.email
+      store: employee.name
       
