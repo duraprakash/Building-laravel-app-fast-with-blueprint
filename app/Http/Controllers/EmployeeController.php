@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\EmployeeResource;
 use App\Models\Employee;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class EmployeeController extends Controller
 {
     public function test(Request $request): Response
     {
-        $employee = Employee::find($request->id);
+        $employee = Employee::find($requset->id);
 
-        $employee->update(['name' => $request->name, 'identification' => $request->identification]);
+        return new EmployeeResource($employee);
     }
 }

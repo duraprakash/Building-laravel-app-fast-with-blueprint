@@ -21,6 +21,7 @@ final class EmployeeControllerTest extends TestCase
 
         $response = $this->get(route('employees.test'));
 
-        $employee->refresh();
+        $response->assertOk();
+        $response->assertJsonStructure([]);
     }
 }

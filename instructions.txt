@@ -993,3 +993,45 @@ db connection with xammp
     
             $employee->update(['name' => $request->name, 'identification' => $request->identification]);
         }
+
+40. resource using blueprint -- generate resource file and convert into Json format
+    models existing code ....
+        controllers:
+            Employee:
+                test:
+                    find: employee.id
+                    resource: employee
+
+    then, run batch file
+    ./blueprint
+
+    -- in controller --
+        public function test(Request $request): Response
+        {
+            $employee = Employee::find($requset->id);
+
+            return new EmployeeResource($employee);
+        }
+
+    -- in Resources/EmployeeResource--
+        /**
+        * Transform the resource into an array.
+        */
+        public function toArray(Request $request): array
+        {
+            return [
+                'id' => $this->id,
+                'name' => $this->name,
+                'identifiacation' => $this->identifiacation,
+                'birth' => $this->birth,
+                'salary' => $this->salary,
+                'marital_status' => $this->marital_status,
+                'bonus' => $this->bonus,
+                'order' => $this->order,
+                'department_id' => $this->department_id,
+                'projects' => ProjectCollection::make($this->whenLoaded('projects')),
+                'contactInfo' => ContactInfoResource::make($this->whenLoaded('contactInfo')),
+            ];
+        }
+
+        
