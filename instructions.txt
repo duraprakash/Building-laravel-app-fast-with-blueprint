@@ -1065,4 +1065,33 @@ db connection with xammp
                 'data' => $this->collection,
             ];
         }
+42. collection using blueprint -- generate resource file
+    models existing code ....
+        controllers:
+            Employee:
+                test:
+                    find: employee.id
+                    resource: collection:employee
+
+    then, run batch file
+    ./blueprint
+
+    -- in controller --
+        public function test(Request $request): Response
+        {
+            $employee = Employee::find($request->id);
+
+            return new EmployeeCollection($employee);
+        }
+
+    -- in Resources/EmployeeCollection--
+        /**
+        * Transform the resource collection into an array.
+        */
+        public function toArray(Request $request): array
+        {
+            return [
+                'data' => $this->collection,
+            ];
+        }
 

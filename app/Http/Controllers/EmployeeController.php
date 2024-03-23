@@ -10,8 +10,6 @@ class EmployeeController extends Controller
 {
     public function test(Request $request): Response
     {
-        $employees = Employee::paginate();
-
         $employee = Employee::find($request->id);
 
         return new EmployeeCollection($employee);
