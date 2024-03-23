@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ThanksMail;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 
 class EmployeeController extends Controller
 {
     public function test(Request $request): Response
     {
-        $employee = Employee::find($request->id);
-        $employee->name="Mark"; // changed name to Mark
-        $employee->save();
+        $employee = Employee::find($id);
 
-        // showing the changed data
-        $employee1 = Employee::find($request->id);
-        dd($employee1->toArray());
+        Mail::to($employee->contactInfo->email)->send(new ThanksMail());
     }
 }
