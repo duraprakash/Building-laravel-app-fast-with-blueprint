@@ -21,6 +21,25 @@ db connection with xammp
 4. migrate
     php artisan migrate
 
+# challange ##1 Online Store ERD
+    create an ERD-diagram for the following
+    * product
+    * categories
+    * customers
+    * bills(customer,total) -every bills have one customer and have multiple bill items
+    * bill items - each bill items have one product, count and subtotal
+        * product
+        * count
+        * subtotal
+
+# challange ##2 YML syntax practice
+    create a YML file and transfer Json to YML for practice
+    * transfer Json to YML manually
+    * check your work using online validators
+    * mess with identations
+    * inline and multiline arrays and objects
+    * remove the 3 dots and 3 dashes
+
 5. install blueprint
     composer require --dev laravel-shift/blueprint
 
@@ -60,6 +79,14 @@ db connection with xammp
     lastly, seeding
         php artisan db:seed
 
+# challange ##3 Project initialization
+    create a fresh laravel project and install yaml and do the following
+    * make an empty laravel project, and an empty db name online_store, add blueprint
+    * migrate default stuff -- try running migrate and fix the issues that may arise
+    * build your first model (category) with blueprint -- category containing name, creation_date, order as number
+    * add more properties with more datatypes -- try with datatypes mention in laravel document to get hands dirty 
+    * build your own version of the batch and share your ideas with your colleges about the batch
+
 11. create blueprint.bat file manually which include -1 command 4 tasks
     php artisan blueprint:erase
     php artisan blueprint:build
@@ -98,6 +125,12 @@ db connection with xammp
     then, run batch file
     ./blueprint
 
+# challange ##4 Model modifiers
+    add modifiers to our build models which is categories with the following
+    * creation date can be null
+    * order can't be repeated -- order can't be repeated for any two given categories
+    * enum for food, non-food
+
 17. one to many relationship [employee-department]
     models:
     Employee:
@@ -130,15 +163,15 @@ db connection with xammp
         order: unsignedinteger default:1 index
         department_id: id foreign:department.id
         relationships:
-        belongsToMany: Project
+            belongsToMany: Project
     Department:
         name: string:100
         relationships:
-        hasMany: Employee
+            hasMany: Employee
     Project:
         name: string:100
         relationships:
-        belongsToMany: Employee
+            belongsToMany: Employee
 
     controllers:
     # ...
@@ -158,21 +191,21 @@ db connection with xammp
         order: unsignedinteger default:1 index
         department_id: id foreign:department.id
         relationships:
-        belongsToMany: Project
-        hasOne: ContactInfo
+            belongsToMany: Project
+            hasOne: ContactInfo
     ContactInfo:
         phone: string:100
         email: string:100
         relationships:
-        belongsTo: Employee
+            belongsTo: Employee
     Department:
         name: string:100
         relationships:
-        hasMany: Employee
+            hasMany: Employee
     Project:
         name: string:100
         relationships:
-        belongsToMany: Employee
+            belongsToMany: Employee
 
     controllers:
     # ...
@@ -192,23 +225,23 @@ db connection with xammp
         order: unsignedinteger default:1 index
         department_id: id foreign:department.id
         relationships:
-        belongsToMany: Project
-        hasOne: ContactInfo
+            belongsToMany: Project
+            hasOne: ContactInfo
     ContactInfo:
         phone: string:100
         email: string:100
         relationships:
-        belongsTo: Employee
+            belongsTo: Employee
     Department:
         name: string:100
         relationships:
-        hasMany: Employee
+            hasMany: Employee
     Project:
         name: string:100
         timestampsTz
         softDeletesTz
         relationships:
-        belongsToMany: Employee
+            belongsToMany: Employee
 
     controllers:
     # ...
@@ -228,24 +261,23 @@ db connection with xammp
         order: unsignedinteger default:1 index
         department_id: id foreign:department.id
         relationships:
-        belongsToMany: Project
-        hasOne: ContactInfo
+            belongsToMany: Project
+            hasOne: ContactInfo
     ContactInfo:
         phone: string:100
         email: string:100
         relationships:
-        belongsTo: Employee
+            belongsTo: Employee
     Department:
         name: string:100
         relationships:
-        hasMany: Employee
+            hasMany: Employee
     Project:
         name: string:100
         timestampsTz
         softDeletesTz
         relationships:
-        belongsToMany: Employee
-
+            belongsToMany: Employee
     seeders: Project , ContactInfo
 
     controllers:
@@ -281,7 +313,7 @@ db connection with xammp
     controllers:
         Employee:
             test:
-            query: all
+                query: all
 
     then, run batch file
     ./blueprint
@@ -333,30 +365,29 @@ db connection with xammp
             order: unsignedinteger default:1 index
             department_id: id foreign:department.id
             relationships:
-            belongsToMany: Project
-            hasOne: ContactInfo
+                belongsToMany: Project
+                hasOne: ContactInfo
         ContactInfo:
             phone: string:100
             email: string:100
             relationships:
-            belongsTo: Employee
+                belongsTo: Employee
         Department:
             name: string:100
             relationships:
-            hasMany: Employee
+                hasMany: Employee
         Project:
             name: string:100
             timestampsTz
             softDeletesTz
             relationships:
-            belongsToMany: Employee
-
+                belongsToMany: Employee
         seeders: Project , ContactInfo
 
         controllers:
         Employee:
             test:
-            query: where:salary order:bonus
+                query: where:salary order:bonus
 
     then, run batch file
     ./blueprint
@@ -423,29 +454,28 @@ db connection with xammp
             department_id: id foreign:department.id
             relationships:
             belongsToMany: Project
-            hasOne: ContactInfo
+                hasOne: ContactInfo
         ContactInfo:
             phone: string:100
             email: string:100
             relationships:
-            belongsTo: Employee
+                belongsTo: Employee
         Department:
             name: string:100
             relationships:
-            hasMany: Employee
+                hasMany: Employee
         Project:
             name: string:100
             timestampsTz
             softDeletesTz
             relationships:
-            belongsToMany: Employee
-
+                belongsToMany: Employee
         seeders: Project , ContactInfo
 
         controllers:
         Employee:
             test:
-            query: where:salary where:name order:bonus limit:3
+                query: where:salary where:name order:bonus limit:3
 
     then, run batch file
     ./blueprint
@@ -497,24 +527,23 @@ db connection with xammp
             order: unsignedinteger default:1 index
             department_id: id foreign:department.id
             relationships:
-            belongsToMany: Project
-            hasOne: ContactInfo
+                belongsToMany: Project
+                hasOne: ContactInfo
         ContactInfo:
             phone: string:100
             email: string:100
             relationships:
-            belongsTo: Employee
+                belongsTo: Employee
         Department:
             name: string:100
             relationships:
-            hasMany: Employee
+                hasMany: Employee
         Project:
             name: string:100
             timestampsTz
             softDeletesTz
             relationships:
-            belongsToMany: Employee
-
+                belongsToMany: Employee
         seeders: Project , ContactInfo
 
         controllers:
@@ -771,8 +800,8 @@ db connection with xammp
         controllers:
             Employee:
                 test:
-                find: employee.id
-                respond: employee
+                    find: employee.id
+                    respond: employee
 
     then, run batch file
     ./blueprint
